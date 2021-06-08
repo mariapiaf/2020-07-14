@@ -7,6 +7,7 @@ package it.polito.tdp.PremierLeague;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.PremierLeague.model.Arco;
 import it.polito.tdp.PremierLeague.model.Model;
 import it.polito.tdp.PremierLeague.model.Team;
 import javafx.event.ActionEvent;
@@ -49,7 +50,21 @@ public class FXMLController {
 
     @FXML
     void doClassifica(ActionEvent event) {
-
+    	txtResult.clear();
+    	Team t = cmbSquadra.getValue();
+    	if(t == null) {
+    		txtResult.setText("Devi scegliere una squadra!");
+    	}
+    	txtResult.appendText("SQUADRE MIGLIORI DI " + t.toString()+": \n");
+    	for(Arco a: this.model.getSquadreCheHannoBattuto(t)) {
+    		txtResult.appendText(a.getT1().toString()+" "+a.getDifferenzaPunteggioClassifica()+"\n");
+    	}
+    	txtResult.appendText("\n");
+    	txtResult.appendText("SQUADRE PEGGIORI DI " + t.toString()+": \n");
+    	for(Arco a: this.model.getSquadreBattuteDa(t)) {
+    		txtResult.appendText(a.getT2().toString()+" "+a.getDifferenzaPunteggioClassifica()+"\n");
+    	}
+    	
     }
 
     @FXML
@@ -58,6 +73,7 @@ public class FXMLController {
     	this.model.creaGrafo();
     	txtResult.setText("# Vertici: " + this.model.getNVertici()+"\n");
     	txtResult.appendText("# Archi: " + this.model.getNArchi()+"\n");
+    	cmbSquadra.getItems().addAll(this.model.getVertici());
     }
 
     @FXML
