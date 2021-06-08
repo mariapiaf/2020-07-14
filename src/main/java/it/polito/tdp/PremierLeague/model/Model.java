@@ -117,7 +117,23 @@ public class Model {
 		return risultato;
 	}
 	
+	public List<Match> getAllMatches(){
+		return this.dao.listAllMatches();
+	}
 	
+	public List<Team> squadrePiuBlasonate(Team squadra){
+		List<Team> result = new LinkedList<>();
+		for(Arco a: this.getSquadreCheHannoBattuto(squadra)) {
+    		result.add(a.getT1());
+    	}
+		return result;
+	}
 	
-	
+	public List<Team> squadreMenoBlasonate(Team squadra){
+		List<Team> result = new LinkedList<>();
+		for(Arco a: this.getSquadreBattuteDa(squadra)) {
+    		result.add(a.getT2());
+    	}
+		return result;
+	}
 }
